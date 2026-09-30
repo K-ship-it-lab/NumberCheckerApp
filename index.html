@@ -90,6 +90,60 @@
 <div id="output"> 
   Waiting for input. 
 </div>
+
+<script> 
+(function () { 
+  var numInput = document.getElementById('numInput'); 
+  var runBtn   = document.getElementById('runBtn'); 
+  var output   = document.getElementById('output'); 
+  var presets  = document.querySelectorAll('button[data-v]'); 
  
+  function runCheck() { 
+    var raw = numInput.value.trim(); 
+    var n   = Number(raw); 
+    var result; 
+ 
+    if (raw === '' || isNaN(n)) { 
+      result = 'That is not a valid number.'; 
+    } 
+    else if (n === 0) {
+      result = 'Zero — neither positive nor negative.'; 
+    } 
+    else if (n < 0) { 
+      result = 'Negative number.'; 
+    } 
+    else if (n > 1000) { 
+      result = 'Large positive number (greater than 1000).'; 
+    } 
+    else if (n === 100) { 
+      result = 'Exactly one hundred.'; 
+    } 
+    else if (n < 100) { 
+      result = 'Small positive number (1 to 99).'; 
+    } 
+    else { 
+      result = 'Positive number (101 to 1000).'; 
+    } 
+ 
+    output.textContent = result; 
+  } 
+ 
+  runBtn.addEventListener('click', runCheck); 
+ 
+  numInput.addEventListener('keydown', function (e) { 
+    if (e.key === 'Enter') { e.preventDefault(); runCheck(); } 
+  }); 
+ 
+  for (var i = 0; i < presets.length; i++) { 
+    presets[i].addEventListener('click', function () { 
+      numInput.value = this.getAttribute('data-v'); 
+      runCheck(); 
+    }); 
+  } 
+ 
+  runCheck();   
+})(); 
+
+</script> 
 </body> 
 </html>
